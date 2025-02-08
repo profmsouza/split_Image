@@ -11,10 +11,13 @@ CLIENT_ID = "63b37faba7aabcb"
 # Criar a API
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "The split_Image API is online!"}
+    
 # Rota para processar a imagem
 @app.get("/process-image/")
-def process_image(img_url: str):
-    try:
+async def process_image(img_url: str):
         # Baixar a imagem
         response = requests.get(img_url, headers={"User-Agent": "Mozilla/5.0"})
         img = Image.open(BytesIO(response.content))
@@ -51,6 +54,3 @@ def process_image(img_url: str):
             os.remove(file_name)
 
         return {"imgur_links": imgur_links}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
