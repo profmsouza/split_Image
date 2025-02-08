@@ -16,7 +16,7 @@ class ImageRequest(BaseModel):
     img_url: str
 
 # Rota para processar a imagem
-@app.post("/process-image/")
+@app.get("/process-image/")
 def process_image(request: ImageRequest):
     try:
         # Baixar a imagem
