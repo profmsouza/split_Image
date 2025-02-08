@@ -15,7 +15,7 @@ async def root():
     return {"message": "The split_Image API is online!"}
 
 # Função para validar a URL da imagem
-def is_valid_url(url: str) -> bool:
+async def is_valid_url(url: str) -> bool:
     try:
         response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
         return response.status_code == 200
