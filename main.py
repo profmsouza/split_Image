@@ -5,7 +5,7 @@ from io import BytesIO
 import os
 
 # Carregar o CLIENT_ID a partir de variáveis de ambiente
-CLIENT_ID = os.getenv("IMGUR_CLIENT_ID", "63b37faba7aabcb")
+CLIENT_ID = "63b37faba7aabcb"
 
 # Criar a API
 app = FastAPI()
