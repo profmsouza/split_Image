@@ -1,26 +1,20 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 import requests
 from PIL import Image
 from io import BytesIO
 import os
 
-# Configurar o Client ID do Imgur
 CLIENT_ID = "63b37faba7aabcb"
 
-# Criar a API com FastAPI
+# Criar a API
 app = FastAPI()
-
-# Modelo de entrada (recebe a URL da imagem)
-class ImageRequest(BaseModel):
-    img_url: str
 
 # Rota para processar a imagem
 @app.get("/process-image/")
-def process_image(request: ImageRequest):
+def process_image(img_url: str):
     try:
         # Baixar a imagem
-        response = requests.get(request.img_url, headers={"User-Agent": "Mozilla/5.0"})
+        response = requests.get(img_url, headers={"User-Agent": "Mozilla/5.0"})
         img = Image.open(BytesIO(response.content))
 
         # Definir coordenadas dos recortes
@@ -33,7 +27,6 @@ def process_image(request: ImageRequest):
 
         imgur_links = []
 
-        # Processar e enviar para o Imgur
         for i, box in enumerate(boxes):
             recorte = img.crop(box)
             file_name = f"recorte_{i+1}.png"
@@ -47,7 +40,6 @@ def process_image(request: ImageRequest):
                     files={"image": f}
                 )
 
-            # Verificar resposta do Imgur
             if response.status_code == 200:
                 imgur_links.append(response.json()["data"]["link"])
             else:
