@@ -30,7 +30,7 @@ def process_image(img_url: str):
             (940, 940, 1800, 1800)
         ]
 
-        imgur_links = []
+        imgur_links = {}
 
         for i, box in enumerate(boxes):
             recorte = img.crop(box)
@@ -47,16 +47,16 @@ def process_image(img_url: str):
 
             # Verificar a resposta do Imgur
             if upload_response.status_code == 200:
-                imgur_links.append(upload_response.json()["data"]["link"])
+                imgur_links[f"imgur_link{i+1}"] = upload_response.json()["data"]["link"]
             else:
                 # Detalhes do erro de upload
                 error_message = upload_response.json().get('data', {}).get('error', 'Erro desconhecido')
-                imgur_links.append(f"Erro no upload: {error_message}")
+                imgur_links[f"imgur_link{i+1}"] = f"Erro no upload: {error_message}"
 
             # Remover o arquivo local
             os.remove(file_name)
 
-        return {"imgur_links": imgur_links}
+        return imgur_links
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
