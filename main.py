@@ -14,6 +14,7 @@ app = FastAPI()
 async def root():
     return {"message": "The split_Image API is online!"}
 
+@app.get("/process-image")
 async def process_image(img_url, q):
         # Baixar a imagem
         response = requests.get(img_url, headers={"User-Agent": "Mozilla/5.0"})
