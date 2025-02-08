@@ -5,7 +5,8 @@ from io import BytesIO
 import os
 
 # Configurar o Client ID do Imgur (use variável de ambiente no Render)
-CLIENT_ID = os.getenv("IMGUR_CLIENT_ID")
+# CLIENT_ID = os.getenv("IMGUR_CLIENT_ID")
+CLIENT_ID = "63b37faba7aabcb"
 
 # Criar a API
 app = FastAPI()
