@@ -1,4 +1,4 @@
-fastapi[all]
-uvicorn[all]
-pillow[all]
-requests[all]
+fastapi==0.110.0
+uvicorn==0.29.0
+pillow==10.2.0
+requests==2.31.0
